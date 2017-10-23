@@ -1,0 +1,12 @@
+[Unit]
+Description=Memcached on port 12590: R4L sessions
+Before=httpd.service
+After=network.target
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/sysconfig/memcached.12590
+ExecStart=/usr/bin/memcached -u $USER -p $PORT -m $CACHESIZE -c $MAXCONN $OPTIONS
+
+[Install]
+WantedBy=multi-user.target

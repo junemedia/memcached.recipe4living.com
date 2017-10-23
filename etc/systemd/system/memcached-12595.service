@@ -1,0 +1,12 @@
+[Unit]
+Description=Memcached on port 12595 
+Before=httpd.service
+After=network.target
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/sysconfig/memcached.12595
+ExecStart=/usr/bin/memcached -u $USER -p $PORT -m $CACHESIZE -c $MAXCONN $OPTIONS
+
+[Install]
+WantedBy=multi-user.target

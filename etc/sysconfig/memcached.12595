@@ -1,0 +1,5 @@
+PORT="12595"
+USER="nobody"
+MAXCONN="5000"
+CACHESIZE="64"
+OPTIONS="-l 10.209.130.72 -v 2 >> /tmp/memcache.12595.log"
