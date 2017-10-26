@@ -7,37 +7,44 @@
 
 ``` bash
 # Clone the repo
-git clone https://github.com/junemedia/memcached.recipe4living.com.git /srv
+cd ~
+git clone https://github.com/junemedia/memcached.recipe4living.com.git ./memcached
+cd memcached
 
-# link config files
-ln -s /srv/etc/sysconfig/memcached.12590 /etc/sysconfig/memcached.12590
-ln -s /srv/etc/sysconfig/memcached.12591 /etc/sysconfig/memcached.12591
-ln -s /srv/etc/sysconfig/memcached.12595 /etc/sysconfig/memcached.12595
+# ---------------------------------------------------------------------
+# Important: Edit etc/sysconfig/memcached.xxxxx files to listen on
+# the host's private IP
+# ---------------------------------------------------------------------
 
-# link unit files
-ln -s /srv/etc/systemd/system/memcached-12590.service /etc/systemd/system/memcached-12590.service
-ln -s /srv/etc/systemd/system/memcached-12591.service /etc/systemd/system/memcached-12591.service
-ln -s /srv/etc/systemd/system/memcached-12595.service /etc/systemd/system/memcached-12595.service
+# copy config files
+sudo cp etc/sysconfig/memcached.12590 /etc/sysconfig/
+sudo cp etc/sysconfig/memcached.12591 /etc/sysconfig/
+sudo cp etc/sysconfig/memcached.12595 /etc/sysconfig/
+
+# copy unit files
+sudo cp etc/systemd/system/memcached-12590.service /etc/systemd/system/
+sudo cp etc/systemd/system/memcached-12591.service /etc/systemd/system/
+sudo cp etc/systemd/system/memcached-12595.service /etc/systemd/system/
 
 # let systemd know about the new files
-systemctl daemon-reload
+sudo systemctl daemon-reload
 
 # start the memcached services
-systemctl start memcached-12590.service
-systemctl start memcached-12591.service
-systemctl start memcached-12595.service
+sudo systemctl start memcached-12590.service
+sudo systemctl start memcached-12591.service
+sudo systemctl start memcached-12595.service
 
 # enable services at boot
-systemctl enable memcached-12590.service
-systemctl enable memcached-12591.service
-systemctl enable memcached-12595.service
+sudo systemctl enable memcached-12590.service
+sudo systemctl enable memcached-12591.service
+sudo systemctl enable memcached-12595.service
 ```
 
 In a pinch, these can just be run from the command line:
 
 ```
-/usr/bin/memcached -u nobody -d -c 5000 -m 1024 -l 10.209.68.182 -p 12590 -v 2 >> /tmp/memcache.12590.log
-/usr/bin/memcached -u nobody -d -c 5000 -m 1024 -l 10.209.68.182 -p 12591 -v 2 >> /tmp/memcache.12591.log
-/usr/bin/memcached -u nobody -d -c 5000 -m 64 -l 10.209.68.182 -p 12595 -v 2 >> /tmp/memcache.12595.log
+sudo /usr/bin/memcached -u nobody -d -c 5000 -m 1024 -l 10.209.68.182 -p 12590 -v 2 >> /tmp/memcache.12590.log
+sudo /usr/bin/memcached -u nobody -d -c 5000 -m 1024 -l 10.209.68.182 -p 12591 -v 2 >> /tmp/memcache.12591.log
+sudo /usr/bin/memcached -u nobody -d -c 5000 -m 64 -l 10.209.68.182 -p 12595 -v 2 >> /tmp/memcache.12595.log
 ```
 
